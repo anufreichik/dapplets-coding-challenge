@@ -6,11 +6,11 @@ import {API_URL_BASE} from "../helpers/constants";
 
 interface IProps{
     list:IDapplet[] | [];
+    loading:boolean;
 }
 
-const DappletList:React.FC<IProps> = ({list}) => {
+const DappletList:React.FC<IProps> = ({list, loading}) => {
 
-    const [tagsData, setTagsData]  = useState<ITag[] | []>([]);
     const [tagsObj, setTagsObj]  = useState<ITagMap>({});
 
     useEffect(()=>{
@@ -18,7 +18,6 @@ const DappletList:React.FC<IProps> = ({list}) => {
         axios.get(`${API_URL_BASE}tags`)
             .then((res) => {
                 if(res && res.data.success) {
-                    setTagsData(res.data.data);
                     //let obj: Record<string, ITag> = {};
                     let obj: ITagMap = {};
                     for(let el of res.data.data){
@@ -31,7 +30,8 @@ const DappletList:React.FC<IProps> = ({list}) => {
 
     return (
         <>
-            {list.map(el=><DappletItem key={el.id} dapplet={el} tags={tagsObj}/>)}
+            {list.map((el, ind)=><DappletItem key={`${el.id}-${ind}`} dapplet={el} tags={tagsObj}/>)}
+            {loading && <h2>Loading more dapplets...</h2>}
         </>
 
     );

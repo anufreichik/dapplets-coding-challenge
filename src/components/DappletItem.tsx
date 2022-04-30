@@ -8,8 +8,7 @@ import MuiAccordion, {AccordionProps} from '@mui/material/Accordion';
 import {IDapplet, ITagMap} from "../types";
 import {Avatar, Chip, Grid} from "@mui/material";
 import {useEffect, useState} from "react";
-import axios from "axios";
-import {API_URL_BASE} from "../helpers/constants";
+import DappletImage from "./DappletImage";
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -30,25 +29,12 @@ interface IProps {
 }
 
 const DappletItem: React.FC<IProps> = ({dapplet, tags}) => {
-    const [imageResponseUrl, setImageResponseUrl] = useState('');
     const [installations, setInstallations] = useState(() => {
         // getting stored value
         const saved = localStorage.getItem("dapplets-installations");
         const initialValue = saved?JSON.parse(saved):'';
         return initialValue;
     });
-
-
-    useEffect(() => {
-        axios.get(`${API_URL_BASE}files/${dapplet.icon}`,
-            {  responseType: 'blob',}
-        )
-            .then((res)=>{
-                const url = window.URL.createObjectURL(new Blob([res.data]));
-                setImageResponseUrl(url);
-            })
-            .catch((err)=>console.log(err.message))
-    }, [])
 
     const handleDelete = (tagId: string) => {
 
@@ -68,12 +54,7 @@ const DappletItem: React.FC<IProps> = ({dapplet, tags}) => {
                 <Grid container direction="row">
                     <Grid item container sm={1}>
                         <MenuIcon/>
-                        <Avatar
-                            alt={dapplet.title}
-                            src={imageResponseUrl}
-                            sx={{ width: 50, height: 50 }}
-                            variant="rounded"
-                        />
+                        <DappletImage title={dapplet.title} icon={dapplet.icon} />
                     </Grid>
                     <Grid item sm={4}><Typography>{dapplet.title}</Typography></Grid>
                     <Grid item sm={4}><Typography>{dapplet.description}</Typography></Grid>
