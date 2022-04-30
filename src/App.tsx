@@ -7,6 +7,7 @@ import axios from "axios";
 import {API_URL_BASE} from "./helpers/constants";
 import {IDapplet} from "./types";
 import useDappletSearch from "./helpers/useDappletSearch";
+import MenuDrawer from "./components/MenuDrawer";
 
 
 const StyledContainer = styled(Grid)(({theme}) => ({
@@ -91,8 +92,11 @@ const App: React.FC = () => {
     }, [searchValue]);
 
     return (
-        <Container>
-            <Grid container direction="column" sx={{
+        <Grid container wrap='nowrap'>
+            <Grid item>
+                <MenuDrawer/>
+            </Grid>
+            <Grid item container direction="column" sx={{
                 background: 'linear-gradient(180deg, rgba(185, 251, 255, 0.2) 0%, rgba(227, 220, 255, 0.2) 100%)',
                 backdropFilter: 'blur(30px)'
             }}>
@@ -109,8 +113,9 @@ const App: React.FC = () => {
                     </Grid>
 
                 </StyledContainer>
+
             </Grid>
-        </Container>
+        </Grid>
     );
 }
 
