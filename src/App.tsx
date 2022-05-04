@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Grid, styled} from "@mui/material";
+import { Grid, styled} from "@mui/material";
 import Header from "./components/Header";
 import DappletList from "./components/DappletList";
 import Search from "./components/Search";
@@ -38,6 +38,7 @@ const App: React.FC = () => {
 
     //API call to load dapplets
     const loadDappletsPage = () => {
+        console.log(searchValue, 'search value')
         let searchFilterString = JSON.stringify([{"property":"title", "value":searchValue}]);
         if(!searchValue) searchFilterString=JSON.stringify([]);
         setLoading(true);

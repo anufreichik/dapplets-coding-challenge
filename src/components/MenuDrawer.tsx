@@ -66,6 +66,14 @@ const DrawerHeader = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 1),
 }));
 
+const DrawerSection = styled('div')(({theme}) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+}));
+
+
+
 const MenuDrawer = () => {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
@@ -110,6 +118,14 @@ const MenuDrawer = () => {
                     </ListItemButton>
                 ))}
             </List>
+            <Divider/>
+            <DrawerSection>
+                My lists
+            </DrawerSection>
+            <Divider/>
+            <DrawerSection>
+                My tags
+            </DrawerSection>
         </Drawer>
     );
 };
